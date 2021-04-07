@@ -13,12 +13,12 @@
 
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 const _ = require('underscore');
 const models = require('../models');
-
+const Domo = models.Domo;
 let DomoModel = {};
-const { Domo } = models;
+//const { Domo } = models;
 
 // mongoose.Types.ObjectID is a function that
 // converts string ID to real mongo ID
@@ -42,7 +42,7 @@ const DomoSchema = new mongoose.Schema({
         required: true,
         ref: 'Account',
     },
-    createdData: {
+    createdDate: {
         type: Date,
         default: Date.now,
     },
