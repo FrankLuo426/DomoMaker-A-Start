@@ -2,7 +2,9 @@
 /* eslint-disable import/newline-after-import */
 /* eslint-disable linebreak-style */
 const models = require('../models');
-const Account = models.Account;
+// const { makerPage } = require('./Domo');
+// const { Domo } = models;
+const { Account } = models;
 const loginPage = (req, res) => {
     res.render('login');
 };
@@ -10,6 +12,7 @@ const signupPage = (req, res) => {
     res.render('signup');
 };
 const logout = (req, res) => {
+    req.session.destroy();
     res.redirect('/');
 };
 const login = (request, response) => {
@@ -29,6 +32,9 @@ const login = (request, response) => {
                 error: 'Wrong username or password',
             });
         }
+
+        req.session.account = Account.AccountModel.toAPI(account);
+
         return res.json({
             redirect: '/maker',
         });
@@ -59,9 +65,12 @@ const signup = (request, response) => {
         };
         const newAccount = new Account.AccountModel(accountData);
         const savePromise = newAccount.save();
-        savePromise.then(() => res.json({
-            redirect: '/maker',
-        }));
+        savePromise.then(() => {
+            req.session.account = Account.AccountModel.toAPI(newAccount);
+            return res.json({
+                redirect: '/maker',
+            });
+        });
         savePromise.catch((err) => {
             console.log(err);
             if (err.code === 11000) {
@@ -76,8 +85,11 @@ const signup = (request, response) => {
     });
 };
 
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signupPage = signupPage;
 module.exports.signup = signup;
+// models.exports.makerPage = makerPage;
+// models.exports.make = makeDomo;
