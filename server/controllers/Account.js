@@ -9,7 +9,7 @@ const {
 } = models;
 const loginPage = (req, res) => {
     res.render('login', {
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
     });
 };
 
@@ -96,7 +96,7 @@ const getToken = (request, response) => {
     const req = request;
     const res = response;
     const csrfJSON = {
-        csrfToken: req.csrfToken();
+        csrfToken: req.csrfToken(),
     };
     res.json(csrfJSON);
 };
@@ -104,8 +104,8 @@ const getToken = (request, response) => {
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
-//module.exports.signupPage = signupPage;
+// module.exports.signupPage = signupPage;
 module.exports.signup = signup;
 // models.exports.makerPage = makerPage;
 // models.exports.make = makeDomo;
-models.exports.getToken = getToken;
+module.exports.getToken = getToken;
