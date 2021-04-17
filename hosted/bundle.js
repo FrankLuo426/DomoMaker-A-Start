@@ -7,12 +7,10 @@ var handleDomo = function handleDomo(e) {
   e.preventDefault();
   $("#domoMessage").animate({
     width: 'hide'
-  }, 350);
-
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
-    handleError("RAWR! All fields are required");
-    return false;
-  }
+  }, 350); // if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoSex").val() == '' ) {
+  //     handleError("RAWR! All fields are required");
+  //     return false;
+  // }
 
   sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
     loadDomosFromServer();
@@ -42,6 +40,13 @@ var DomoForm = function DomoForm(props) {
     type: "text",
     name: "age",
     placeholder: "Domo Age"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "sex"
+  }, "Sex: "), /*#__PURE__*/React.createElement("input", {
+    mid: "domoSex",
+    type: "text",
+    name: "sex",
+    placeholder: "Domo Sex"
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
@@ -74,7 +79,9 @@ var DomoList = function DomoList(props) {
       className: "domoName"
     }, " Name: ", domo.name, " "), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
-    }, " Age: ", domo.age, " "));
+    }, " Age: ", domo.age, " "), /*#__PURE__*/React.createElement("h3", {
+      className: "domoSex"
+    }, " Sex: ", domo.sex, " "));
   });
   return /*#__PURE__*/React.createElement("div", {
     className: "domoList"
@@ -93,6 +100,9 @@ var setup = function setup(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(DomoForm, {
     csrf: csrf
   }), document.querySelector("#makeDomo"));
+  ReactDOM.render( /*#__PURE__*/React.createElement(DomoForm, {
+    csrf: csrf
+  }), document.querySelector("#makeRandomDomo"));
   ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
     domos: []
   }), document.querySelector("#domos"));
